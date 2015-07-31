@@ -100,7 +100,7 @@ func Float(i interface{}) (res float64, ok bool) {
 //	"3.34" -> true
 //	1 -> true
 //	1337 -> true
-// 1.434 -> true
+//	1.434 -> true
 // -1 -> true
 //	nil -> false
 //	0.0 -> false
