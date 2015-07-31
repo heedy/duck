@@ -2,6 +2,7 @@ package duck
 
 import (
 	"encoding/json"
+	"math"
 	"reflect"
 	"strconv"
 )
@@ -119,7 +120,12 @@ func Bool(i interface{}) (res bool, ok bool) {
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 		return v.Uint() != 0, true
 	case reflect.Float32, reflect.Float64:
-		return v.Float() != 0.0, true
+		//We have to deal ith NaN here
+		f := v.Float()
+		if math.IsNaN(f) {
+			return false, true
+		}
+		return f != 0.0, true
 	case reflect.Bool:
 		return v.Bool(), true
 	case reflect.String:
@@ -132,6 +138,9 @@ func Bool(i interface{}) (res bool, ok bool) {
 				return true, true
 			}
 			return false, false
+		}
+		if math.IsNaN(f) {
+			return false, true
 		}
 		return f != 0.0, true
 	}

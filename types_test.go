@@ -20,6 +20,7 @@ func TestInt(t *testing.T) {
 		{"1.1", false, 0},
 		{" 2 ", false, 0},
 		{"Inf", false, 0},
+		{"NaN", false, 0},
 		{int(12), true, 12},
 		{int8(12), true, 12},
 		{int16(12), true, 12},
@@ -48,7 +49,6 @@ func TestInt(t *testing.T) {
 			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
 		}
 	}
-
 }
 
 func TestFloat(t *testing.T) {
@@ -113,12 +113,14 @@ func TestBool(t *testing.T) {
 		{"0.0", true, false},
 		{" 2 ", false, false},
 		{"Inf", true, true},
+		{"NaN", true, false},
 		{int(12), true, true},
 		{int(0), true, false},
 		{uint(12), true, true},
 		{uint(0), true, false},
 		{3.45, true, true},
 		{0.0, true, false},
+		{math.NaN(), true, false},
 		{"true", true, true},
 		{"false", true, false},
 		{true, true, true},
@@ -151,6 +153,8 @@ func TestString(t *testing.T) {
 		{3.45, true, "3.45"},
 		{0.0, true, "0"},
 		{3.0, true, "3"},
+		{math.Inf(1), true, "+Inf"},
+		{math.NaN(), true, "NaN"},
 		{true, true, "true"},
 		{false, true, "false"},
 		{nil, false, ""},
