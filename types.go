@@ -178,15 +178,16 @@ func String(i interface{}) (res string, ok bool) {
 }
 
 //JSONString attempts to convert to a string... but if that fails it
-//marshals the given data into json, and returns the json string
-func JSONString(i interface{}) (res string, ok bool) {
+//marshals the given data into json, and returns the json string. If it
+//can't marshal, it just returns an empty string
+func JSONString(i interface{}) string {
 	s, ok := String(i)
 	if ok {
-		return s, ok
+		return s
 	}
 	b, err := json.Marshal(i)
 	if err != nil {
-		return "", false
+		return ""
 	}
-	return string(b), true
+	return string(b)
 }

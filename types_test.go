@@ -1,7 +1,6 @@
 package duck
 
 import (
-	"fmt"
 	"math"
 	"testing"
 
@@ -11,9 +10,9 @@ import (
 func TestInt(t *testing.T) {
 	ptrtst := int64(5)
 	cases := []struct {
-		in  interface{}
-		ok  bool
-		out int64
+		In  interface{}
+		Ok  bool
+		Out int64
 	}{
 		{"2", true, 2},
 		{"2.00", true, 2},
@@ -43,10 +42,10 @@ func TestInt(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		out, ok := Int(c.in)
-		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
-		if c.ok {
-			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		Out, Ok := Int(c.In)
+		require.Equal(t, c.Ok, Ok, JSONString(c))
+		if c.Ok {
+			require.Equal(t, c.Out, Out, JSONString(c))
 		}
 	}
 }
@@ -54,9 +53,9 @@ func TestInt(t *testing.T) {
 func TestFloat(t *testing.T) {
 	ptrtst := int64(5)
 	cases := []struct {
-		in  interface{}
-		ok  bool
-		out float64
+		In  interface{}
+		Ok  bool
+		Out float64
 	}{
 		{"2", true, 2},
 		{"2.345", true, 2.345},
@@ -83,29 +82,29 @@ func TestFloat(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		out, ok := Float(c.in)
-		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
-		if c.ok {
-			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		Out, Ok := Float(c.In)
+		require.Equal(t, c.Ok, Ok, JSONString(c))
+		if c.Ok {
+			require.Equal(t, c.Out, Out, JSONString(c))
 		}
 	}
 
 	//Testing NaN needs its own little thing
-	out, ok := Float("NaN")
-	require.True(t, ok)
-	require.True(t, math.IsNaN(out))
-	out, ok = Float(math.NaN())
-	require.True(t, ok)
-	require.True(t, math.IsNaN(out))
+	Out, Ok := Float("NaN")
+	require.True(t, Ok)
+	require.True(t, math.IsNaN(Out))
+	Out, Ok = Float(math.NaN())
+	require.True(t, Ok)
+	require.True(t, math.IsNaN(Out))
 
 }
 
 func TestBool(t *testing.T) {
 	ptrtst := int64(5)
 	cases := []struct {
-		in  interface{}
-		ok  bool
-		out bool
+		In  interface{}
+		Ok  bool
+		Out bool
 	}{
 		{"2", true, true},
 		{"0", true, false},
@@ -130,10 +129,10 @@ func TestBool(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		out, ok := Bool(c.in)
-		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
-		if c.ok {
-			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		Out, Ok := Bool(c.In)
+		require.Equal(t, c.Ok, Ok, JSONString(c))
+		if c.Ok {
+			require.Equal(t, c.Out, Out, JSONString(c))
 		}
 	}
 }
@@ -141,9 +140,9 @@ func TestBool(t *testing.T) {
 func TestString(t *testing.T) {
 	ptrtst := int64(5)
 	cases := []struct {
-		in  interface{}
-		ok  bool
-		out string
+		In  interface{}
+		Ok  bool
+		Out string
 	}{
 		{"hello", true, "hello"},
 		{int(12), true, "12"},
@@ -162,29 +161,24 @@ func TestString(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		out, ok := String(c.in)
-		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
-		if c.ok {
-			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		Out, Ok := String(c.In)
+		require.Equal(t, c.Ok, Ok, JSONString(c))
+		if c.Ok {
+			require.Equal(t, c.Out, Out, JSONString(c))
 		}
 	}
 }
 
 func TestJSONString(t *testing.T) {
 	cases := []struct {
-		in  interface{}
-		ok  bool
-		out string
+		In  interface{}
+		Out string
 	}{
-		{3.0, true, "3"},
-		{map[string]interface{}{"hi": 3}, true, `{"hi":3}`},
+		{3.0, "3"},
+		{map[string]interface{}{"hi": 3}, `{"hi":3}`},
 	}
 
 	for _, c := range cases {
-		out, ok := JSONString(c.in)
-		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
-		if c.ok {
-			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
-		}
+		require.Equal(t, c.Out, JSONString(c.In), JSONString(c))
 	}
 }
