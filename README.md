@@ -2,7 +2,7 @@
 # Duck
 Sometimes in golang a function returns an interface (or perhaps something was marshalled into an interface). Duck allows you to manipulate and convert from interfaces in a very simple manner.
 
-## Basics
+## Type Conversions
 
 The most basic actions are conversions between the standard built-in types.
 
@@ -36,6 +36,42 @@ i,ok = duck.Int(vptr)
 f,ok = duck.Float(vptr)
 //true,true
 b,ok = duck.Bool(vptr)
+
+```
+
+## Comparisons
+
+Duck allows comparing interfaces with similar conversion semantics as type conversions.
+
+```go
+//true, true ("34.5" < 35)
+out, ok := duck.Lt("34.5",35)
+//false, true
+out, ok = duck.Lt("34.5",34)
+
+//true,true
+out, ok = duck.Eq("1.0", true)
+
+//false,true - this one is unusual, true is defined as 1 (as in c)
+out, ok = duck.Eq("2.0", true)
+
+//false,true - false is defined as 0
+out, ok = duck.Eq("2.0", false)
+
+//true, true (34.6 >= 34)
+out,ok = duck.Gte(34.6, 34)
+
+if duck.Cmp(45,45.32)==duck.LessThan {
+	//true!
+}
+
+if duck.Cmp(45," LOL ")==duck.CantCompare {
+	//true!
+}
+
+if duck.Cmp(45,45.0)==duck.Equals {
+	//true!
+}
 
 ```
 
