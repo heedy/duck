@@ -31,6 +31,10 @@ func TestIntOK(t *testing.T) {
 	require.True(t, ok)
 	require.Equal(t, int64(12), i)
 
+	i, ok = Int(uint64(12))
+	require.True(t, ok)
+	require.Equal(t, int64(12), i)
+
 	i, ok = Int(float32(3.0))
 	require.True(t, ok)
 	require.Equal(t, int64(3), i)
@@ -89,6 +93,10 @@ func TestFloatOK(t *testing.T) {
 	require.Equal(t, float64(12), i)
 
 	i, ok = Float(int64(12))
+	require.True(t, ok)
+	require.Equal(t, float64(12), i)
+
+	i, ok = Float(uint64(12))
 	require.True(t, ok)
 	require.Equal(t, float64(12), i)
 
@@ -156,6 +164,14 @@ func TestBoolOK(t *testing.T) {
 	require.True(t, ok)
 	require.False(t, i)
 
+	i, ok = Bool(uint(2))
+	require.True(t, ok)
+	require.True(t, i)
+
+	i, ok = Bool(uint(0))
+	require.True(t, ok)
+	require.False(t, i)
+
 	i, ok = Bool(1.0)
 	require.True(t, ok)
 	require.True(t, i)
@@ -200,6 +216,10 @@ func TestStringOK(t *testing.T) {
 	require.Equal(t, "12", i)
 
 	i, ok = String(int64(12))
+	require.True(t, ok)
+	require.Equal(t, "12", i)
+
+	i, ok = String(uint64(12))
 	require.True(t, ok)
 	require.Equal(t, "12", i)
 

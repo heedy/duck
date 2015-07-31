@@ -31,6 +31,8 @@ func Int(i interface{}) (res int64, ok bool) {
 	switch k {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return v.Int(), true
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		return int64(v.Uint()), true
 	case reflect.Float32, reflect.Float64:
 		f := v.Float()
 		res = int64(f)
@@ -71,6 +73,8 @@ func Float(i interface{}) (res float64, ok bool) {
 	switch k {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return float64(v.Int()), true
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		return float64(v.Uint()), true
 	case reflect.Float32, reflect.Float64:
 		return v.Float(), true
 
@@ -112,6 +116,8 @@ func Bool(i interface{}) (res bool, ok bool) {
 	switch k {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return v.Int() != 0, true
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		return v.Uint() != 0, true
 	case reflect.Float32, reflect.Float64:
 		return v.Float() != 0.0, true
 	case reflect.Bool:
@@ -145,6 +151,8 @@ func String(i interface{}) (res string, ok bool) {
 	switch k {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return strconv.FormatInt(v.Int(), 10), true
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		return strconv.FormatUint(v.Uint(), 10), true
 	case reflect.Float32, reflect.Float64:
 		return strconv.FormatFloat(v.Float(), 'g', -1, 64), true
 	case reflect.Bool:
