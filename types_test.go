@@ -1,263 +1,186 @@
 package duck
 
 import (
+	"fmt"
+	"math"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
-func TestIntOK(t *testing.T) {
-	i, ok := Int("2")
-	require.True(t, ok)
-	require.Equal(t, int64(2), i)
-
-	i, ok = Int("2.00")
-	require.True(t, ok)
-	require.Equal(t, int64(2), i)
-
-	i, ok = Int(int8(12))
-	require.True(t, ok)
-	require.Equal(t, int64(12), i)
-
-	i, ok = Int(int16(12))
-	require.True(t, ok)
-	require.Equal(t, int64(12), i)
-
-	i, ok = Int(int32(12))
-	require.True(t, ok)
-	require.Equal(t, int64(12), i)
-
-	i, ok = Int(int64(12))
-	require.True(t, ok)
-	require.Equal(t, int64(12), i)
-
-	i, ok = Int(uint64(12))
-	require.True(t, ok)
-	require.Equal(t, int64(12), i)
-
-	i, ok = Int(float32(3.0))
-	require.True(t, ok)
-	require.Equal(t, int64(3), i)
-
-	i, ok = Int(float64(3.0))
-	require.True(t, ok)
-	require.Equal(t, int64(3), i)
-
-	i, ok = Int(false)
-	require.True(t, ok)
-	require.Equal(t, int64(0), i)
-
-	i, ok = Int(true)
-	require.True(t, ok)
-	require.Equal(t, int64(1), i)
-
+func TestInt(t *testing.T) {
 	ptrtst := int64(5)
-	i, ok = Int(&ptrtst)
-	require.True(t, ok)
-	require.Equal(t, int64(5), i)
+	cases := []struct {
+		in  interface{}
+		ok  bool
+		out int64
+	}{
+		{"2", true, 2},
+		{"2.00", true, 2},
+		{"1.1", false, 0},
+		{" 2 ", false, 0},
+		{"Inf", false, 0},
+		{int(12), true, 12},
+		{int8(12), true, 12},
+		{int16(12), true, 12},
+		{int32(12), true, 12},
+		{int64(12), true, 12},
+		{uint(12), true, 12},
+		{uint8(12), true, 12},
+		{uint16(12), true, 12},
+		{uint32(12), true, 12},
+		{uint64(12), true, 12},
+		{float32(3.0), true, 3},
+		{float64(3.0), true, 3},
+		{3.3, false, 0},
+		{math.Inf(1), false, 0},
+		{math.NaN(), false, 0},
+		{true, true, 1},
+		{false, true, 0},
+		{&ptrtst, true, 5},
+		{nil, false, 0},
+	}
+
+	for _, c := range cases {
+		out, ok := Int(c.in)
+		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
+		if c.ok {
+			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		}
+	}
+
 }
 
-func TestIntNOK(t *testing.T) {
-	_, ok := Int(" 2 ")
-	require.False(t, ok)
-
-	_, ok = Int(nil)
-	require.False(t, ok)
-
-	_, ok = Int("1.1")
-	require.False(t, ok)
-
-	_, ok = Int(1.1)
-	require.False(t, ok)
-}
-
-func TestFloatOK(t *testing.T) {
-	i, ok := Float("2")
-	require.True(t, ok)
-	require.Equal(t, float64(2), i)
-
-	i, ok = Float("2.345")
-	require.True(t, ok)
-	require.Equal(t, float64(2.345), i)
-
-	i, ok = Float(int8(12))
-	require.True(t, ok)
-	require.Equal(t, float64(12), i)
-
-	i, ok = Float(int16(12))
-	require.True(t, ok)
-	require.Equal(t, float64(12), i)
-
-	i, ok = Float(int32(12))
-	require.True(t, ok)
-	require.Equal(t, float64(12), i)
-
-	i, ok = Float(int64(12))
-	require.True(t, ok)
-	require.Equal(t, float64(12), i)
-
-	i, ok = Float(uint64(12))
-	require.True(t, ok)
-	require.Equal(t, float64(12), i)
-
-	i, ok = Float(float32(3.0))
-	require.True(t, ok)
-	require.Equal(t, float64(3), i)
-
-	i, ok = Float(float64(3.0))
-	require.True(t, ok)
-	require.Equal(t, float64(3), i)
-
-	i, ok = Float(false)
-	require.True(t, ok)
-	require.Equal(t, float64(0), i)
-
-	i, ok = Float(true)
-	require.True(t, ok)
-	require.Equal(t, float64(1), i)
-
+func TestFloat(t *testing.T) {
 	ptrtst := int64(5)
-	i, ok = Float(&ptrtst)
+	cases := []struct {
+		in  interface{}
+		ok  bool
+		out float64
+	}{
+		{"2", true, 2},
+		{"2.345", true, 2.345},
+		{" 2 ", false, 0},
+		{"Inf", true, math.Inf(1)},
+		{int(12), true, 12},
+		{int8(12), true, 12},
+		{int16(12), true, 12},
+		{int32(12), true, 12},
+		{int64(12), true, 12},
+		{uint(12), true, 12},
+		{uint8(12), true, 12},
+		{uint16(12), true, 12},
+		{uint32(12), true, 12},
+		{uint64(12), true, 12},
+		{float32(3.0), true, 3},
+		{float64(3.0), true, 3},
+		{3.3, true, 3.3},
+		{math.Inf(1), true, math.Inf(1)},
+		{true, true, 1},
+		{false, true, 0},
+		{&ptrtst, true, 5},
+		{nil, false, 0},
+	}
+
+	for _, c := range cases {
+		out, ok := Float(c.in)
+		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
+		if c.ok {
+			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		}
+	}
+
+	//Testing NaN needs its own little thing
+	out, ok := Float("NaN")
 	require.True(t, ok)
-	require.Equal(t, float64(5), i)
-}
-
-func TestFloatNOK(t *testing.T) {
-	_, ok := Float(" 2 ")
-	require.False(t, ok)
-
-	_, ok = Float(nil)
-	require.False(t, ok)
-
-}
-
-func TestBoolOK(t *testing.T) {
-	i, ok := Bool("2")
+	require.True(t, math.IsNaN(out))
+	out, ok = Float(math.NaN())
 	require.True(t, ok)
-	require.True(t, i)
-
-	i, ok = Bool("0")
-	require.True(t, ok)
-	require.False(t, i)
-
-	i, ok = Bool("2.0")
-	require.True(t, ok)
-	require.True(t, i)
-
-	i, ok = Bool("0.0")
-	require.True(t, ok)
-	require.False(t, i)
-
-	i, ok = Bool("true")
-	require.True(t, ok)
-	require.True(t, i)
-
-	i, ok = Bool("false")
-	require.True(t, ok)
-	require.False(t, i)
-
-	i, ok = Bool(2)
-	require.True(t, ok)
-	require.True(t, i)
-
-	i, ok = Bool(0)
-	require.True(t, ok)
-	require.False(t, i)
-
-	i, ok = Bool(uint(2))
-	require.True(t, ok)
-	require.True(t, i)
-
-	i, ok = Bool(uint(0))
-	require.True(t, ok)
-	require.False(t, i)
-
-	i, ok = Bool(1.0)
-	require.True(t, ok)
-	require.True(t, i)
-
-	i, ok = Bool(0.0)
-	require.True(t, ok)
-	require.False(t, i)
-
-	i, ok = Bool(true)
-	require.True(t, ok)
-	require.True(t, i)
-
-	i, ok = Bool(false)
-	require.True(t, ok)
-	require.False(t, i)
-}
-
-func TestBoolNOK(t *testing.T) {
-	_, ok := Bool(" 2 ")
-	require.False(t, ok)
-
-	_, ok = Bool(nil)
-	require.False(t, ok)
+	require.True(t, math.IsNaN(out))
 
 }
 
-func TestStringOK(t *testing.T) {
-	i, ok := String("hello")
-	require.True(t, ok)
-	require.Equal(t, "hello", i)
-
-	i, ok = String(int8(12))
-	require.True(t, ok)
-	require.Equal(t, "12", i)
-
-	i, ok = String(int16(12))
-	require.True(t, ok)
-	require.Equal(t, "12", i)
-
-	i, ok = String(int32(12))
-	require.True(t, ok)
-	require.Equal(t, "12", i)
-
-	i, ok = String(int64(12))
-	require.True(t, ok)
-	require.Equal(t, "12", i)
-
-	i, ok = String(uint64(12))
-	require.True(t, ok)
-	require.Equal(t, "12", i)
-
-	i, ok = String(float32(3.0))
-	require.True(t, ok)
-	require.Equal(t, "3", i)
-
-	i, ok = String(float64(3.0))
-	require.True(t, ok)
-	require.Equal(t, "3", i)
-
-	i, ok = String(false)
-	require.True(t, ok)
-	require.Equal(t, "false", i)
-
-	i, ok = String(true)
-	require.True(t, ok)
-	require.Equal(t, "true", i)
-
+func TestBool(t *testing.T) {
 	ptrtst := int64(5)
-	i, ok = String(&ptrtst)
-	require.True(t, ok)
-	require.Equal(t, "5", i)
+	cases := []struct {
+		in  interface{}
+		ok  bool
+		out bool
+	}{
+		{"2", true, true},
+		{"0", true, false},
+		{"2.0", true, true},
+		{"0.0", true, false},
+		{" 2 ", false, false},
+		{"Inf", true, true},
+		{int(12), true, true},
+		{int(0), true, false},
+		{uint(12), true, true},
+		{uint(0), true, false},
+		{3.45, true, true},
+		{0.0, true, false},
+		{"true", true, true},
+		{"false", true, false},
+		{true, true, true},
+		{false, true, false},
+		{nil, false, false},
+		{&ptrtst, true, true},
+	}
+
+	for _, c := range cases {
+		out, ok := Bool(c.in)
+		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
+		if c.ok {
+			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		}
+	}
 }
 
-func TestStringNOK(t *testing.T) {
-	_, ok := String(nil)
-	require.False(t, ok)
+func TestString(t *testing.T) {
+	ptrtst := int64(5)
+	cases := []struct {
+		in  interface{}
+		ok  bool
+		out string
+	}{
+		{"hello", true, "hello"},
+		{int(12), true, "12"},
+		{int(0), true, "0"},
+		{uint(12), true, "12"},
+		{uint(0), true, "0"},
+		{3.45, true, "3.45"},
+		{0.0, true, "0"},
+		{3.0, true, "3"},
+		{true, true, "true"},
+		{false, true, "false"},
+		{nil, false, ""},
+		{&ptrtst, true, "5"},
+	}
 
+	for _, c := range cases {
+		out, ok := String(c.in)
+		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
+		if c.ok {
+			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		}
+	}
 }
 
 func TestJSONString(t *testing.T) {
-	i, ok := JSONString(float32(3.0))
-	require.True(t, ok)
-	require.Equal(t, "3", i)
+	cases := []struct {
+		in  interface{}
+		ok  bool
+		out string
+	}{
+		{3.0, true, "3"},
+		{map[string]interface{}{"hi": 3}, true, `{"hi":3}`},
+	}
 
-	d := map[string]interface{}{"hi": 3}
-	i, ok = JSONString(d)
-	require.True(t, ok)
-	require.Equal(t, `{"hi":3}`, i)
+	for _, c := range cases {
+		out, ok := JSONString(c.in)
+		require.Equal(t, c.ok, ok, fmt.Sprintf("%v", c))
+		if c.ok {
+			require.Equal(t, c.out, out, fmt.Sprintf("%v", c))
+		}
+	}
 }
