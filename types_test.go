@@ -8,6 +8,10 @@ import (
 )
 
 func TestInt(t *testing.T) {
+	var interfacetest interface{}
+	var blah string
+	blah = "65"
+	interfacetest = &blah
 	ptrtst := int64(5)
 	cases := []struct {
 		In  interface{}
@@ -39,6 +43,7 @@ func TestInt(t *testing.T) {
 		{false, true, 0},
 		{&ptrtst, true, 5},
 		{nil, false, 0},
+		{interfacetest, true, 65},
 	}
 
 	for _, c := range cases {

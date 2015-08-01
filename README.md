@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/connectordb/duck.svg)](https://travis-ci.org/connectordb/duck)[![Coverage Status](https://coveralls.io/repos/connectordb/duck/badge.svg?branch=master&service=github)](https://coveralls.io/github/connectordb/duck?branch=master)[![GoDoc](https://godoc.org/github.com/connectordb/duck?status.svg)](http://godoc.org/github.com/connectordb/duck)
 # Duck
-Sometimes in golang a function returns an interface (or perhaps something was marshalled into an interface). Duck allows you to manipulate and convert from interfaces in a very simple manner.
+Sometimes in golang a function returns an interface (or perhaps something was marshalled into an interface). Duck allows you to manipulate and convert from interfaces in a very simple manner. Duck is *very* eager to fit the inputs to the wanted format.
 
 ## Type Conversions
 
@@ -23,9 +23,9 @@ i, ok := duck.Int("56.0")
 //1.0, true
 f, ok := duck.Float(true)
 
-var v interface{}
+var vptr interface{}
 
-v = 6.0
+v := 6.0
 vptr := &v	//duck follows pointers
 
 //"6.0",true
@@ -41,7 +41,7 @@ b,ok = duck.Bool(vptr)
 
 ## Comparisons
 
-Duck allows comparing interfaces with similar conversion semantics as type conversions.
+Duck allows comparing interfaces with similar conversions as the type functions.
 
 ```go
 //true, true ("34.5" < 35)
@@ -75,6 +75,42 @@ if duck.Cmp(45,45.0)==duck.Equals {
 
 ```
 
-## Maps and Structs
+## Objects
 
-Under construction...
+Duck gets very liberal with its duck-typing for objects. The main function here is `Get` which gets an element from the object. Since duck just *loves* duck-typing, as long as the requested element
+can be found in the given object, it is extracted - no matter if the object is a map, struct or array/slice.
+
+```go
+floatarray := []float{0.0,1.0,2.0,3.0,4.0}
+
+// 1.0, true
+e,ok := duck.Get(floatarray,1)
+e,ok = duck.Get(floatarray,1.0)
+e,ok = duck.Get(floatarray,true)
+e,ok = duck.Get(floatarray,"1.0")
+
+//Python-style indexing!
+//4.0,true
+e, ok = duck.Get(floatarray,-1.0)
+
+//Currently, only map[string] has duck-typing support
+smap := map[string]string{"foo": "bar", "true": "wow", "1": "one"}
+
+//"bar", true
+s, ok := duck.Get(smap, "foo")
+//"wow", true
+s, ok = duck.Get(smap,true)
+// "one", true
+s, ok = duck.Get(smap,1)	//Note that string conversions ALWAYS convert 1.000 -> 1
+
+st := struct {
+	MyElement string
+	SecondElement int
+}{"woo",1337}
+
+//"woo", true
+sv, ok := duck.Get(st,"MyElement")
+//nil, false
+sv, ok = duck.Get(st,"Nonexisting")
+
+```
