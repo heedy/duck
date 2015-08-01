@@ -4,6 +4,8 @@ import "reflect"
 
 //Get takes an object, and the element name/index to extract, and returns the element, as well as an
 //ok boolean specifying if the element was found. Remember that only exported fields are available from structs
+//One note: only `map[string]` is supported right now. maps of another type will cause get to panic!
+//This is an active weakness in the current implementation. It should be enough to get data from arbitrary marshalled json.
 func Get(i interface{}, elem interface{}) (val interface{}, ok bool) {
 	v, k := preprocess(i)
 

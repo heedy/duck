@@ -93,7 +93,7 @@ e,ok = duck.Get(floatarray,"1.0")
 //4.0,true
 e, ok = duck.Get(floatarray,-1.0)
 
-//Currently, only map[string] has duck-typing support
+//Currently, only map[string] is supported - panics on other map types!
 smap := map[string]string{"foo": "bar", "true": "wow", "1": "one"}
 
 //"bar", true
