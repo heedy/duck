@@ -11,6 +11,12 @@ type TestStruct struct {
 	A2 int
 }
 
+type TestStruct2 struct {
+	A1 int `duck:"-"`
+	A2 int
+	A3 int `duck:"lol"`
+}
+
 func TestGet(t *testing.T) {
 	cases := []struct {
 		A1  interface{}
@@ -27,6 +33,10 @@ func TestGet(t *testing.T) {
 		{TestStruct{"foo", 4}, "A1", true, "foo"},
 		{TestStruct{"foo", 4}, nil, false, ""},
 		{TestStruct{"foo", 4}, "notexist", false, ""},
+		{TestStruct2{1, 2, 3}, "A1", false, 0},
+		{TestStruct2{1, 2, 3}, "A3", false, 0},
+		{TestStruct2{1, 2, 3}, "A2", true, 2},
+		{TestStruct2{1, 2, 3}, "lol", true, 3},
 		{34.5, 1, false, nil},
 		{map[string]interface{}{"true": 5}, true, true, 5},
 		{map[string]interface{}{"true": 5}, "true", true, 5},

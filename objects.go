@@ -2,6 +2,22 @@ package duck
 
 import "reflect"
 
+//getDuckTag gets the element of the struct with the given duck tag
+//it is assumed that v is a value of a struct.
+func getDuckTag(v reflect.Value, tag string) (val interface{}, ok bool) {
+	//As of now, I don't think it is possible to do this without looping through the fields
+	//of the struct. Since structs have a constant number of fields, this shouldn't be an issue
+	t := v.Type()
+	for i := 0; i < t.NumField(); i++ {
+		val := t.Field(i)
+		if val.Tag.Get("duck") == tag {
+			return v.FieldByName(val.Name).Interface(), true
+		}
+	}
+	return nil, false
+}
+
+//singleGet gets the elem element of interface i
 func singleGet(i interface{}, elem interface{}) (val interface{}, ok bool) {
 	v, k := preprocess(i)
 
@@ -46,11 +62,18 @@ func singleGet(i interface{}, elem interface{}) (val interface{}, ok bool) {
 			return nil, false
 		}
 
-		val := v.FieldByName(estr)
-		if val.IsValid() {
-			return val.Interface(), true
+		t := v.Type()
+
+		val, ok := t.FieldByName(estr)
+		if !ok {
+			return getDuckTag(v, estr)
 		}
-		return nil, false
+		//If the duck tag is not there or it is the same, return the interface
+		if val.Tag.Get("duck") == "" || val.Tag.Get("duck") == estr {
+			return v.FieldByName(estr).Interface(), true
+		}
+
+		return getDuckTag(v, estr)
 	}
 	return nil, false
 }

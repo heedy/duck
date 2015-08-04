@@ -114,3 +114,21 @@ sv, ok := duck.Get(st,"MyElement")
 sv, ok = duck.Get(st,"Nonexisting")
 
 ```
+
+#### Duck-Tags
+
+Sometimes you want structs to be recognized by a special tag in Get. The `duck` tag allows you to do that.
+
+```go
+val := struct{
+	A1 string `duck:"lol"`
+	A2 string `duck:"-"`
+}{"foo","bar"}
+
+//nil,false
+v,ok := duck.Get(val,"A1")
+v,ok = duck.Get(val,"A2")
+
+//"foo", true
+v, ok = duck.Get(val,"lol")
+```
