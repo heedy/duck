@@ -91,8 +91,10 @@ func Equal(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 	_, k1 := preprocess(arg1)
 	_, k2 := preprocess(arg2)
 
-	if k1 == k2 {
+	if k1 == k2 && k1 != reflect.String {
 		//The kinds are the same - DeepEqual should have handled it - it is false!
+		//EXCEPT for when it is string - two strings, "2" and "2.0" have the same meaning
+		//but are not equal
 		return false, true
 	}
 

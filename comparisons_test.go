@@ -90,6 +90,7 @@ func TestEqual(t *testing.T) {
 		{" 2 ", false, false, false},
 		{"Inf", true, true, false},
 		{"NaN", math.NaN(), true, true},
+		{"2.0", "2", true, true},
 	}
 
 	for _, c := range cases {
