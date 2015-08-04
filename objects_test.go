@@ -43,3 +43,13 @@ func TestGet(t *testing.T) {
 
 	}
 }
+
+func TestMultlevelGet(t *testing.T) {
+	d := map[string]interface{}{"foo": map[string]int{"bar": 1337}}
+	out, ok := Get(d, "foo", "bar")
+	require.True(t, ok)
+	require.Equal(t, 1337, out)
+
+	out, ok = Get(d, "foo", "nofoo")
+	require.False(t, ok)
+}
