@@ -132,3 +132,32 @@ v,ok = duck.Get(val,"A2")
 //"foo", true
 v, ok = duck.Get(val,"lol")
 ```
+
+
+## Set
+
+Initial support for setting values is also supported.
+
+```go
+var integer int
+//true
+ok := duck.Set(&integer,"54")
+if (intger==54) {
+	//true!
+}
+
+var mystring string
+//true
+ok = duck.Set(&mystring,13.0)
+if (mystring=="13") {
+	//true!
+}
+
+var iface interface{}
+
+//true
+ok = duck.Set(&iface, true)
+//true!
+_,ok = iface.(bool)
+
+```
