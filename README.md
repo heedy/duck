@@ -136,7 +136,7 @@ v, ok = duck.Get(val,"lol")
 
 ## Set
 
-Initial support for setting values is also supported.
+Initial support for setting values is also available.
 
 ```go
 var integer int
@@ -159,5 +159,25 @@ var iface interface{}
 ok = duck.Set(&iface, true)
 //true!
 _,ok = iface.(bool)
+
+//Currently, only map[string]interface{} is supported for setting values
+// reflect makes it very difficult to set map values. Structs and arrays work fine. Note that Set will only replace existing values, it will not create new ones
+mymap := map[string]interface{}{"foo":"bar"}
+ok = duck.Set(&mymap,1337,"foo")
+//mymap["foo"]=1337 now
+
+//Arbitrary object depth is supported
+mysuperobject := struct{
+	A1 []interface{}
+	A2 string
+}{
+	A1: []interface{}{"hello","world"},
+}
+//world
+duck.Get(mysuperobject,"A1",1)
+
+//sets "world" to "not world anymore"
+ok = duck.Set(&m,"not world anymore","A1",1)
+
 
 ```
