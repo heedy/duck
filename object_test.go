@@ -126,3 +126,15 @@ func TestSet(t *testing.T) {
 	setTest(t, &deepnest, 49, []interface{}{0, "A2"}, true)
 	require.Equal(t, 49, s.A2)
 }
+
+func TestLength(t *testing.T) {
+	i, ok := Length([]int{1, 2, 3})
+	require.True(t, ok)
+	require.Equal(t, 3, i)
+	i, ok = Length("hello")
+	require.True(t, ok)
+	require.Equal(t, 5, i)
+
+	i, ok = Length(5)
+	require.False(t, ok)
+}

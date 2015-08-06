@@ -230,3 +230,13 @@ func Set(i interface{}, setto interface{}, elem ...interface{}) (ok bool) {
 	}
 	return false
 }
+
+//Length extracts the length of an array/map (anything that can have len() run on it)
+func Length(i interface{}) (l int, ok bool) {
+	v, k := preprocess(i)
+	switch k {
+	case reflect.Map, reflect.Array, reflect.Slice, reflect.String:
+		return v.Len(), true
+	}
+	return 0, false
+}
