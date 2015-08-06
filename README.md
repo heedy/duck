@@ -161,7 +161,7 @@ ok = duck.Set(&iface, true)
 _,ok = iface.(bool)
 
 //Currently, only map[string]interface{} is supported for setting values
-// reflect makes it very difficult to set map values. Structs and arrays work fine. Note that Set will only replace existing values, it will not create new ones
+// reflect makes it very difficult to set map values. Structs and arrays work fine.
 mymap := map[string]interface{}{"foo":"bar"}
 ok = duck.Set(&mymap,1337,"foo")
 //mymap["foo"]=1337 now

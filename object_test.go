@@ -115,10 +115,12 @@ func TestSet(t *testing.T) {
 	require.Equal(t, 24, arr[1])
 
 	g := map[string]interface{}{"hi": "world"}
-	setTest(t, &g, 1337, []interface{}{"noexists"}, false)
+	setTest(t, &g, 1337, []interface{}{"noexists"}, true)
+	require.Equal(t, 1337, g["noexists"])
 	setTest(t, &g, 1337, []interface{}{"hi"}, true)
 	require.Equal(t, 1337, g["hi"])
 
+	//This is dangerous - risking a panic
 	g2 := map[string]string{"hi": "world"}
 	setTest(t, &g2, 1337, []interface{}{"hi"}, false)
 

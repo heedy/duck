@@ -130,7 +130,7 @@ func Get(i interface{}, elem ...interface{}) (val interface{}, ok bool) {
 //
 //NOTE: Currently setting structs (ie, if setto is a struct) is non-functional
 //if the receiving end is not interface{}. Also, only map[string]interface{} is supported
-//of maps to receive values - and Set will only replace existing values.
+//of maps to receive values. You are risking panic if another map type is used
 func Set(i interface{}, setto interface{}, elem ...interface{}) (ok bool) {
 
 	v := reflect.ValueOf(i)
@@ -163,7 +163,10 @@ func Set(i interface{}, setto interface{}, elem ...interface{}) (ok bool) {
 
 		rv := v.MapIndex(vestr)
 		if !rv.IsValid() {
-			return false
+			//The value does not exist - since it is a map, we can add it.
+			//we assume that it is a map[string]interface{}
+			v.SetMapIndex(vestr, reflect.ValueOf(setto))
+			return true
 		}
 
 		//Alright, so we get the type information from the value
