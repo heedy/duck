@@ -71,9 +71,6 @@ func Gte(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 
 //Equal attempts to check equality between two interfaces. If the values
 //are not directly comparable thru DeepEqual, tries to do a "duck" comparison.
-//One thing to note: Equal(x,y) != Equal(y,x) in some cases! This is because the first
-//argument to Equal is special - it is the "benchmark" type - the thing we want to be
-//comparing arg2 against
 //	true true -> true
 //	"true" true -> true
 //	"1" true -> true

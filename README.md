@@ -81,7 +81,7 @@ Duck gets very liberal with its duck-typing for objects. The main function here 
 can be found in the given object, it is extracted - no matter if the object is a map, struct or array/slice.
 
 ```go
-floatarray := []float{0.0,1.0,2.0,3.0,4.0}
+floatarray := []float32{0.0,1.0,2.0,3.0,4.0}
 
 // 1.0, true
 e,ok := duck.Get(floatarray,1)
