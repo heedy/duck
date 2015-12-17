@@ -38,7 +38,7 @@ func Subtract(i1, i2 interface{}) (res float64, ok bool) {
 	return 0, false
 }
 
-//Multiply tries to convert the two to numbers and subtract them
+//Multiply tries to convert the two to numbers and multiply them
 func Multiply(i1, i2 interface{}) (res float64, ok bool) {
 	f1, ok := Float(i1)
 	f2, ok2 := Float(i2)
