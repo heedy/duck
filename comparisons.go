@@ -80,7 +80,6 @@ func Gte(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 //	0.0 false -> true
 func Equal(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 	same := false
-
 	if reflect.DeepEqual(arg1, arg2) {
 		return true, true
 	}
@@ -106,11 +105,11 @@ func Equal(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 	f1, ok := Float(arg1)
 	if !ok {
 
-		return false, false
+		return false, same
 	}
 	f2, ok := Float(arg2)
 	if !ok {
-		return false, false
+		return false, same
 	}
 
 	if math.IsNaN(f1) && math.IsNaN(f2) {

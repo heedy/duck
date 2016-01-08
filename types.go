@@ -49,6 +49,11 @@ func Int(i interface{}) (res int64, ok bool) {
 	case reflect.String:
 		f, err := strconv.ParseFloat(v.String(), 64)
 		if err != nil {
+			if v.String() == "false" {
+				return 0, true
+			} else if v.String() == "true" {
+				return 1, true
+			}
 			return 0, false
 		}
 		res = int64(f)
@@ -67,6 +72,7 @@ func Int(i interface{}) (res int64, ok bool) {
 //	1.34 -> 1.34
 //	false -> 0.0
 //	true -> 1.0
+//	"false" -> 0.0
 //	" 2.3 " -> !ok
 func Float(i interface{}) (res float64, ok bool) {
 	v, k := preprocess(i)
@@ -87,6 +93,11 @@ func Float(i interface{}) (res float64, ok bool) {
 	case reflect.String:
 		f, err := strconv.ParseFloat(v.String(), 64)
 		if err != nil {
+			if v.String() == "false" {
+				return 0, true
+			} else if v.String() == "true" {
+				return 1, true
+			}
 			return 0, false
 		}
 		return f, true

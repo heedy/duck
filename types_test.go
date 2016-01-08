@@ -44,6 +44,8 @@ func TestInt(t *testing.T) {
 		{&ptrtst, true, 5},
 		{nil, false, 0},
 		{interfacetest, true, 65},
+		{"false", true, 0},
+		{"true", true, 1},
 	}
 
 	for _, c := range cases {
@@ -84,6 +86,8 @@ func TestFloat(t *testing.T) {
 		{false, true, 0},
 		{&ptrtst, true, 5},
 		{nil, false, 0},
+		{"false", true, 0},
+		{"true", true, 1},
 	}
 
 	for _, c := range cases {
