@@ -106,11 +106,11 @@ func Equal(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 	f1, ok := Float(arg1)
 	if !ok {
 
-		return false, same
+		return false, false
 	}
 	f2, ok := Float(arg2)
 	if !ok {
-		return false, same
+		return false, false
 	}
 
 	if math.IsNaN(f1) && math.IsNaN(f2) {
