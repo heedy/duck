@@ -7,7 +7,7 @@ import (
 )
 
 // Copy performs a deep copy of the given interface. The copy makes sure that no pointers/maps are shared
-//	between the origginal data and new points.
+//	between the original data and new points.
 // WARNING: This is not a real deep copy. It totally cheats at the moment. Do not use when you need
 //	to preserve structs in output.
 // WARNING 2: Converts int to float. Ultimately, this function is not yet good for normal use. It is just
