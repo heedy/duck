@@ -1,4 +1,8 @@
-[![Build Status](https://travis-ci.org/connectordb/duck.svg)](https://travis-ci.org/connectordb/duck)[![Coverage Status](https://coveralls.io/repos/connectordb/duck/badge.svg?branch=master&service=github)](https://coveralls.io/github/connectordb/duck?branch=master)[![GoDoc](https://godoc.org/github.com/connectordb/duck?status.svg)](http://godoc.org/github.com/connectordb/duck)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/connectordb/duck/blob/master/LICENSE)
+[![ReportCard](http://goreportcard.com/badge/connectordb/duck)](http://goreportcard.com/report/connectordb/duck)
+[![Build Status](https://travis-ci.org/connectordb/duck.svg)](https://travis-ci.org/connectordb/duck)
+[![Coverage Status](https://coveralls.io/repos/connectordb/duck/badge.svg?branch=master&service=github)](https://coveralls.io/github/connectordb/duck?branch=master)
+[![GoDoc](https://godoc.org/github.com/connectordb/duck?status.svg)](http://godoc.org/github.com/connectordb/duck)
 # Duck
 Sometimes in golang a function returns an interface (or perhaps something was marshalled into an interface). Duck allows you to manipulate and convert from interfaces in a very simple manner. Duck is *very* eager to fit the inputs to the wanted format.
 
