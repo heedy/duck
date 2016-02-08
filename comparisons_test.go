@@ -93,6 +93,7 @@ func TestEqual(t *testing.T) {
 		{"2.0", "2", true, true},
 		{"hello", "world", true, false},
 		{"true", true, true, true},
+		{"2", nil, true, false},
 	}
 
 	for _, c := range cases {

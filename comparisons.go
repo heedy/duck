@@ -101,6 +101,11 @@ func Equal(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 
 	//TODO: There is the special case of comparing a char with a string
 
+	// Comparing things to nil should work
+	if arg1 == nil || arg2 == nil {
+		return arg1 == nil && arg2 == nil, true
+	}
+
 	//Now attempt to compare equality float-wise
 	f1, ok := Float(arg1)
 	if !ok {
