@@ -117,7 +117,7 @@ func Float(i interface{}) (res float64, ok bool) {
 //	1 -> true
 //	1337 -> true
 //	1.434 -> true
-//	-1 -> true
+//	-1 -> false
 //	nil -> false
 //	0.0 -> false
 //	0 -> false
@@ -127,7 +127,7 @@ func Bool(i interface{}) (res bool, ok bool) {
 
 	switch k {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		return v.Int() != 0, true
+		return v.Int() > 0, true
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 		return v.Uint() != 0, true
 	case reflect.Float32, reflect.Float64:
@@ -136,7 +136,7 @@ func Bool(i interface{}) (res bool, ok bool) {
 		if math.IsNaN(f) {
 			return false, true
 		}
-		return f != 0.0, true
+		return f > 0.0, true
 	case reflect.Bool:
 		return v.Bool(), true
 	case reflect.String:
@@ -153,7 +153,7 @@ func Bool(i interface{}) (res bool, ok bool) {
 		if math.IsNaN(f) {
 			return false, true
 		}
-		return f != 0.0, true
+		return f > 0.0, true
 	}
 
 	return false, false

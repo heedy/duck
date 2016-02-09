@@ -135,6 +135,8 @@ func TestBool(t *testing.T) {
 		{false, true, false},
 		{nil, false, false},
 		{&ptrtst, true, true},
+		{-1, true, false},
+		{"-1", true, false},
 	}
 
 	for _, c := range cases {
