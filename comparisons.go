@@ -29,8 +29,15 @@ func Cmp(arg1 interface{}, arg2 interface{}) int {
 		return LessThan
 	}
 
-	f1, _ := Float(arg1)
-	f2, _ := Float(arg2)
+	f1, ok := Float(arg1)
+	if !ok {
+		return CantCompare
+	}
+	f2, ok := Float(arg2)
+	if !ok {
+		return CantCompare
+	}
+
 	if math.IsNaN(f1) || math.IsNaN(f2) {
 		return CantCompare
 	}
@@ -109,12 +116,11 @@ func Equal(arg1 interface{}, arg2 interface{}) (res bool, ok bool) {
 	//Now attempt to compare equality float-wise
 	f1, ok := Float(arg1)
 	if !ok {
-
-		return false, same
+		return false, !same || k1 == reflect.String
 	}
 	f2, ok := Float(arg2)
 	if !ok {
-		return false, same
+		return false, !same || k1 == reflect.String
 	}
 
 	if math.IsNaN(f1) && math.IsNaN(f2) {

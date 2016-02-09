@@ -87,7 +87,7 @@ func TestEqual(t *testing.T) {
 		{"0", true, true, false},
 		{"2.0", true, true, false},
 		{"0.0", true, true, false},
-		{" 2 ", false, false, false},
+		{" 2 ", false, true, false},
 		{"Inf", true, true, false},
 		{"NaN", math.NaN(), true, true},
 		{"2.0", "2", true, true},
