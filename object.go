@@ -243,3 +243,36 @@ func Length(i interface{}) (l int, ok bool) {
 	}
 	return 0, false
 }
+
+// Keys gets the field names by which the object can be accessed. Note that arrays
+// do not return any keys
+func Keys(i interface{}) (keys []string, ok bool) {
+	keys = make([]string, 0)
+	v, k := preprocess(i)
+	switch k {
+	case reflect.Map:
+		k := v.MapKeys()
+		for i := range k {
+			s, ok := k[i].Interface().(string)
+			if !ok {
+				return nil, false
+			}
+			keys = append(keys, s)
+		}
+		return keys, true
+	case reflect.Struct:
+		t := v.Type()
+		for i := 0; i < v.NumField(); i++ {
+			t2 := t.Field(i)
+			fname := t2.Tag.Get("duck")
+			if fname != "-" {
+				if fname == "" {
+					fname = t2.Name
+				}
+				keys = append(keys, fname)
+			}
+		}
+		return keys, true
+	}
+	return nil, false
+}

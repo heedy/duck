@@ -140,3 +140,17 @@ func TestLength(t *testing.T) {
 	i, ok = Length(5)
 	require.False(t, ok)
 }
+
+func TestKeys(t *testing.T) {
+	k, ok := Keys(map[string]string{"hi": "", "ho": ""})
+	require.True(t, ok)
+	require.EqualValues(t, []string{"hi", "ho"}, k)
+	k, ok = Keys(map[int]string{2: "", 3: ""})
+	require.False(t, ok)
+	k, ok = Keys(TestStruct{})
+	require.True(t, ok)
+	require.EqualValues(t, []string{"A1", "A2"}, k)
+	k, ok = Keys(TestStruct2{})
+	require.True(t, ok)
+	require.EqualValues(t, []string{"A2", "lol"}, k)
+}
