@@ -20,7 +20,8 @@ func TestGt(t *testing.T) {
 		{"0", true, true, false},
 		{"2.0", true, true, true},
 		{"0.0", true, true, false},
-		{" 2 ", false, false, true},
+		{" 2 .", false, false, true},
+		{" 2 ", false, true, true},
 		{"Inf", true, true, true},
 	}
 
@@ -54,7 +55,8 @@ func TestGte(t *testing.T) {
 		{"0", true, true, false},
 		{"2.0", true, true, true},
 		{"0.0", true, true, false},
-		{" 2 ", false, false, true},
+		{" 2 ", false, true, true},
+		{" 2 .", false, false, true},
 		{"Inf", true, true, true},
 	}
 
@@ -124,7 +126,8 @@ func TestCmp(t *testing.T) {
 		{"0", true, LessThan},
 		{"2.0", true, GreaterThan},
 		{"0.0", true, LessThan},
-		{" 2 ", false, CantCompare},
+		{" 2 ", false, GreaterThan},
+		{" 2 .", false, CantCompare},
 		{"Inf", true, GreaterThan},
 		{"NaN", 3.3, CantCompare},
 		{"NaN", math.NaN(), Equals},

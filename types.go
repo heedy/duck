@@ -5,6 +5,7 @@ import (
 	"math"
 	"reflect"
 	"strconv"
+	"strings"
 )
 
 func preprocess(i interface{}) (reflect.Value, reflect.Kind) {
@@ -47,7 +48,7 @@ func Int(i interface{}) (res int64, ok bool) {
 		}
 		return 0, true
 	case reflect.String:
-		f, err := strconv.ParseFloat(v.String(), 64)
+		f, err := strconv.ParseFloat(strings.TrimSpace(v.String()), 64)
 		if err != nil {
 			if v.String() == "false" {
 				return 0, true
@@ -91,7 +92,7 @@ func Float(i interface{}) (res float64, ok bool) {
 		}
 		return 0, true
 	case reflect.String:
-		f, err := strconv.ParseFloat(v.String(), 64)
+		f, err := strconv.ParseFloat(strings.TrimSpace(v.String()), 64)
 		if err != nil {
 			if v.String() == "false" {
 				return 0, true
@@ -141,7 +142,7 @@ func Bool(i interface{}) (res bool, ok bool) {
 		return v.Bool(), true
 	case reflect.String:
 		s := v.String()
-		f, err := strconv.ParseFloat(s, 64)
+		f, err := strconv.ParseFloat(strings.TrimSpace(s), 64)
 		if err != nil {
 			if s == "false" || len(s) == 0 {
 				return false, true
