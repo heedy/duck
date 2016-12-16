@@ -7,6 +7,12 @@ import "reflect"
 func valueGetDuckTag(v reflect.Value, tag string) (val reflect.Value, ok bool) {
 	//As of now, I don't think it is possible to do this without looping through the fields
 	//of the struct. Since structs have a constant number of fields, this shouldn't be an issue
+
+	// If the goal is an empty string, we don't even look for the tag
+	if tag == "" {
+		return v, false
+	}
+
 	t := v.Type()
 	for i := 0; i < t.NumField(); i++ {
 		val := t.Field(i)

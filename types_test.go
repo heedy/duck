@@ -43,7 +43,7 @@ func TestInt(t *testing.T) {
 		{true, true, 1},
 		{false, true, 0},
 		{&ptrtst, true, 5},
-		{nil, false, 0},
+		{nil, true, 0},
 		{interfacetest, true, 65},
 		{"false", true, 0},
 		{"true", true, 1},
@@ -87,7 +87,7 @@ func TestFloat(t *testing.T) {
 		{true, true, 1},
 		{false, true, 0},
 		{&ptrtst, true, 5},
-		{nil, false, 0},
+		{nil, true, 0},
 		{"false", true, 0},
 		{"true", true, 1},
 	}
@@ -135,7 +135,7 @@ func TestBool(t *testing.T) {
 		{"false", true, false},
 		{true, true, true},
 		{false, true, false},
-		{nil, false, false},
+		{nil, true, false},
 		{&ptrtst, true, true},
 		{-1, true, false},
 		{"-1", true, false},
@@ -169,7 +169,7 @@ func TestString(t *testing.T) {
 		{math.NaN(), true, "NaN"},
 		{true, true, "true"},
 		{false, true, "false"},
-		{nil, false, ""},
+		{nil, true, ""},
 		{&ptrtst, true, "5"},
 	}
 

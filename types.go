@@ -26,8 +26,11 @@ func preprocess(i interface{}) (reflect.Value, reflect.Kind) {
 //	false -> 0
 //	true -> 1
 //	"1.3" -> !ok
-//	nil -> !ok
+//	nil -> 0
 func Int(i interface{}) (res int64, ok bool) {
+	if i == nil {
+		return 0, true
+	}
 	v, k := preprocess(i)
 
 	switch k {
@@ -75,7 +78,11 @@ func Int(i interface{}) (res int64, ok bool) {
 //	true -> 1.0
 //	"false" -> 0.0
 //	" 2.3 " -> !ok
+//	nil -> 0.0
 func Float(i interface{}) (res float64, ok bool) {
+	if i == nil {
+		return 0.0, true
+	}
 	v, k := preprocess(i)
 
 	switch k {
@@ -124,6 +131,9 @@ func Float(i interface{}) (res float64, ok bool) {
 //	0 -> false
 //	"" -> false
 func Bool(i interface{}) (res bool, ok bool) {
+	if i == nil {
+		return false, true
+	}
 	v, k := preprocess(i)
 
 	switch k {
@@ -167,6 +177,9 @@ func Bool(i interface{}) (res bool, ok bool) {
 //	false -> "false"
 //	true -> "true"
 func String(i interface{}) (res string, ok bool) {
+	if i == nil {
+		return "", true
+	}
 	v, k := preprocess(i)
 
 	switch k {

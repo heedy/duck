@@ -18,7 +18,7 @@ func TestAdd(t *testing.T) {
 		{"hello", "world", true, "helloworld"},
 		{132, 1.0, true, 133},
 		{12, -1, true, 11},
-		{nil, 4, false, 0},
+		{nil, 4, true, 4},
 	}
 
 	for _, c := range cases {
