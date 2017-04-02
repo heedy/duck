@@ -154,3 +154,15 @@ func TestKeys(t *testing.T) {
 	require.True(t, ok)
 	require.EqualValues(t, []string{"A2", "lol"}, k)
 }
+
+func BenchmarkGet(b *testing.B) {
+	v := map[string]interface{}{
+		"abc": "def",
+		"efg": 234,
+		"qre": 345.435,
+	}
+
+	for n := 0; n < b.N; n++ {
+		Get(v, "efg")
+	}
+}

@@ -195,3 +195,75 @@ func TestJSONString(t *testing.T) {
 		require.Equal(t, c.Out, JSONString(c.In), JSONString(c))
 	}
 }
+
+func BenchmarkIntToInt(b *testing.B) {
+	v := int64(345243)
+
+	for n := 0; n < b.N; n++ {
+		Int(v)
+	}
+}
+
+func BenchmarkFloatToInt(b *testing.B) {
+	v := float64(345243)
+
+	for n := 0; n < b.N; n++ {
+		Int(v)
+	}
+}
+
+func BenchmarkStringToInt(b *testing.B) {
+	v := "345243"
+
+	for n := 0; n < b.N; n++ {
+		Int(v)
+	}
+}
+
+func BenchmarkIntToFloat(b *testing.B) {
+	v := int64(345243)
+
+	for n := 0; n < b.N; n++ {
+		Float(v)
+	}
+}
+
+func BenchmarkFloatToFloat(b *testing.B) {
+	v := float64(345243)
+
+	for n := 0; n < b.N; n++ {
+		Float(v)
+	}
+}
+
+func BenchmarkStringToFloat(b *testing.B) {
+	v := "345243"
+
+	for n := 0; n < b.N; n++ {
+		Float(v)
+	}
+}
+
+func BenchmarkIntToString(b *testing.B) {
+	v := int64(345243)
+
+	for n := 0; n < b.N; n++ {
+		String(v)
+	}
+}
+
+func BenchmarkFloatToString(b *testing.B) {
+	v := float64(345243)
+
+	for n := 0; n < b.N; n++ {
+		String(v)
+	}
+}
+
+func BenchmarkStringToString(b *testing.B) {
+	v := "345243"
+
+	for n := 0; n < b.N; n++ {
+		String(v)
+	}
+}
