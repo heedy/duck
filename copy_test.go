@@ -27,3 +27,15 @@ func TestCopy(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkMapCopy(b *testing.B) {
+	v := map[string]interface{}{
+		"abc": "def",
+		"efg": 234,
+		"qre": 345.435,
+	}
+
+	for n := 0; n < b.N; n++ {
+		Copy(v)
+	}
+}

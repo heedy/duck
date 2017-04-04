@@ -115,3 +115,33 @@ func TestMod(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkAddInt(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Add(23, 47)
+	}
+}
+
+func BenchmarkAddFloat(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Add(23.3, 47.2)
+	}
+}
+
+func BenchmarkAddString(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Add("hello world!", " hi")
+	}
+}
+
+func BenchmarkMultiplyFloat(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Lt(23.4, 12.3)
+	}
+}
+
+func BenchmarkModFloat(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Lt(23.4, 12.3)
+	}
+}

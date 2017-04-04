@@ -155,7 +155,7 @@ func TestKeys(t *testing.T) {
 	require.EqualValues(t, []string{"A2", "lol"}, k)
 }
 
-func BenchmarkGet(b *testing.B) {
+func BenchmarkGetMap(b *testing.B) {
 	v := map[string]interface{}{
 		"abc": "def",
 		"efg": 234,
@@ -164,5 +164,33 @@ func BenchmarkGet(b *testing.B) {
 
 	for n := 0; n < b.N; n++ {
 		Get(v, "efg")
+	}
+}
+
+func BenchmarkGetArray(b *testing.B) {
+	v := []interface{}{1, 2, 3, 4}
+
+	for n := 0; n < b.N; n++ {
+		Get(v, 2)
+	}
+}
+
+func BenchmarkArrayLength(b *testing.B) {
+	v := []interface{}{1, 2, 3, 4}
+
+	for n := 0; n < b.N; n++ {
+		Length(v)
+	}
+}
+
+func BenchmarkMapLength(b *testing.B) {
+	v := map[string]interface{}{
+		"abc": "def",
+		"efg": 234,
+		"qre": 345.435,
+	}
+
+	for n := 0; n < b.N; n++ {
+		Length(v)
 	}
 }

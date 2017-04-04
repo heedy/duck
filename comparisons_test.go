@@ -149,3 +149,45 @@ func TestCmp(t *testing.T) {
 		require.Equal(t, c.Out, Cmp(c.A2, c.A1), JSONString(c))
 	}
 }
+
+func BenchmarkLtInt(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Lt(23, 47)
+	}
+}
+
+func BenchmarkLtFloat(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Lt(float64(23), float64(45))
+	}
+}
+
+func BenchmarkLtString(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Lt("45", "52.3")
+	}
+}
+
+func BenchmarkEqualInt(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Equal(45, 45)
+	}
+}
+
+func BenchmarkEqualIntFloat(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Equal(45, 45.0)
+	}
+}
+
+func BenchmarkEqualString(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Equal("hi", "hello!")
+	}
+}
+
+func BenchmarkEqualStringInt(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Equal("43", 42)
+	}
+}

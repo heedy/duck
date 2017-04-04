@@ -204,6 +204,14 @@ func BenchmarkIntToInt(b *testing.B) {
 	}
 }
 
+func BenchmarkIntPtrToInt(b *testing.B) {
+	v := int64(345243)
+
+	for n := 0; n < b.N; n++ {
+		Int(&v)
+	}
+}
+
 func BenchmarkFloatToInt(b *testing.B) {
 	v := float64(345243)
 
