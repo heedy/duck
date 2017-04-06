@@ -185,3 +185,9 @@ ok = duck.Set(&m,"not world anymore","A1",1)
 
 
 ```
+
+
+# If you need speed
+
+Duck itself is very general, but not particularly fast. To work in restricted environments where speed is critical,
+a limited version of duck was created: quack. Quack is located in the quack subfolder, with the same API. It is *much* quicker.
